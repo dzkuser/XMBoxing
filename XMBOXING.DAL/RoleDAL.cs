@@ -29,7 +29,7 @@ namespace XMBOXING.DAL
         /// <returns></returns>
         public IQueryable<RoleEntity> GetRoleByAccountName(string astrAccountName)
         {
-            string strSql = "select * from tbBet where AccountName=@AccountName";
+            string strSql = "select b.* from tbUserRole a join tbRole b on a.RoleID=b.ID where AccountName=@AccountName";
             Dictionary<string, object> objParam = new Dictionary<string, object>();
             objParam.Add("@AccountName",astrAccountName);
             return QueryList(strSql,objParam).AsQueryable();

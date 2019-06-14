@@ -121,12 +121,12 @@ function RoleAuthorization() {
 
 }
 
-
+//根据角色ID得到权限
 function GetPowerByRoleID() {
 
     var param = {
-        //角色ID (这个要改)
-        aintRoleID: 4
+        //角色ID集合 (这个要改)
+        astrRoleIDs: JSON.stringify([4])
      
     }
 
@@ -137,10 +137,52 @@ function GetPowerByRoleID() {
         dataType: 'json',
         success: function (data) {
             console.log(data);
-            CheckedCheckbox(JSON.parse(data.Result));
-           // getParent(tree, JSON.parse(data.Result));
+       
         }
     });
 
 }
+
+//角色分配用户
+function RoleAllocationUser() {
+
+    var param = {
+        "aintRoleID": 4,
+        "astrAccountNames": JSON.stringify(['dzk','kkk'])
+    }
+
+    $.ajax({
+        url: 'http://localhost:61648/Power/AllocationRole',
+        method: 'post',
+        data: param,
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+        
+        }
+    });
+
+
+}
+
+
+function GetRoleByUser() {
+    //可以不要参数，用户登录后会存在session
+    var param = {
+        "astrAccountName":"dzk"
+    }
+
+    $.ajax({
+        url: 'http://localhost:61648/Power/GetRoleByUser',
+        method: 'post',
+        data: param,
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+
+        }
+    });
+}
+
+
 

@@ -156,10 +156,10 @@ namespace XMBOXING.Backstage.Controllers
         /// </summary>
         /// <param name="aintRoleID"></param>
         /// <returns></returns>
-        public ActionResult GetPowerByRoleID(int aintRoleID) {
+        public ActionResult GetPowerByRoleID(string astrRoleIDs) {
 
-            List<int> objRoleIDs = new List<int>();
-            objRoleIDs.Add(aintRoleID);
+            List<int> objRoleIDs = JsonConvert.DeserializeObject<List<int>>(astrRoleIDs);
+           
             IQueryable<PowerEntity> objPowers = mobjPowerBLL.GetPowerByIDs(objRoleIDs);
             return Content(JsonConvert.SerializeObject(objPowers));
         }
