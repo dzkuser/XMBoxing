@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+
+<h3>每改变一个新页面要发状态码c</h3>
+<p>
+    eg：
+    var _param = {
+    "FromUser": "dzk(用户名)",
+    "Tag": "c",
+    }
+</p>
+<select id="select" multiple>
+    @*<option value="UserBLL.Login">登录</option>
+        <option value="CompetitionBLL.GetComprtitionByDate">查询在日期内的赛事</option>
+        <option value="CompetitionBLL.GetCompetitionByCarousel">查询要进行图片轮播的赛事</option>
+        <option value="CompetitionBLL.GetCompetitionByIndex">查询要在首页展示的赛事</option>
+        <option value="GameMethodBLL.GetCompetitionMethod">查询该赛事的玩法 和玩法的投票信息</option>
+        <option value="BetBLL.InsertBet">添加一条投票</option>*@
+
+    <option value="0">登录</option>
+    <option value="1">查询在日期内的赛事</option>
+    <option value="2">查询要进行图片轮播的赛事</option>
+    <option value="3">查询要在首页展示的赛事</option>
+    <option value="4">查询该赛事的玩法 和玩法的投票信息</option>
+    <option value="5">添加一条投票</option>
+</select>
+
+<h3>参数</h3>
+<div id="param">
+
+
+</div>
+<p>--------------------------------------------------</p>
+
+
+<h3>结果</h3>
+<div id="result"></div>
+
+<button id="send">send</button>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+
+    var method = ["UserBLL.Login", "CompetitionBLL.GetComprtitionByDate", "CompetitionBLL.GetCompetitionByCarousel", "CompetitionBLL.GetCompetitionByIndex", "GameMethodBLL.GetCompetitionMethod", "BetBLL.InsertBet"];
+    var param = [{ "astrAccountName": "dzk", "astrUserPassWord": "123" }, { "aDate": "2019-7-4" }, null, null, { "aintComprtitionID": 4, "astrAccountName": 'dzk' }, { "AccountName": "dzk", "MethodID": 2, "CompetitionID": 4 }]
+    var explain = ["astrAccountName是用户名，astrUserPassWord是密码", "aDate是日期，可以不传，不传为NULL 查所有", "", "", "aintComprtitionID:赛事ID ，astrAccountName：用户账号", "AccountName:用户名，MethodID：玩法编号，CompetitionID：赛事编号"]
+
+    var wsClient = new WebSocket('ws://172.16.31.250:9009');
+    wsClient.onopen = function (e) {
+        console.log("open");
+        console.log(e);
+    };
+    wsClient.onclose = function (e) {
+        console.log("close");
+    };
+    wsClient.onmessage = function (e) {
+        console.log(e);
+        $("#result").empty();
+        $("#result").text(e.data);
+        var da = JSON.parse(e.data);
+        console.log(JSON.parse(da.Message));
+
+
+    };
+    wsClient.onerror = function (e) {
+
+    };
+
+    function sendClick() {
+        var value = $("#select").val();
+        var _param = {
+            "FromUser": "",
+            "Tag": "ac",
+            "Message": JSON.stringify(param[Number(value)]),
+            "ActionMethod": method[Number(value)]
+        }
+        $("#param").empty();
+        $("#param").text(explain[Number(value)] + '\r\n 参数：' + JSON.stringify(_param));
+        wsClient.send(JSON.stringify(_param));
+    }
+    $("#send").click(sendClick);
+</script>

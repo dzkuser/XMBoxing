@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewBag.Title = "TreeView";
+}
+
+<h2>TreeView</h2>
+
+<div id="test">
+
+
+</div>
+
+<button id="b">checkboxview</button>
+<table id="x">
+
+
+</table>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/TreeView.js"></script>
+<script src="~/Scripts/Role.js"></script>
+<script>
+
+   // GetRoles();
+
+    //DeleteRoleIDs();
+
+   // InsertRole();
+  //  UpdateRole();
+
+
+    $("#b").click(function () {
+        var tt = GetCheckBoxPowerValue();
+        RoleAuthorization();
+        console.log(tt);
+    });
+
+
+
+    var tree = {
+        "ParentID": "parentID",
+        "NodeID": "id",
+        "HtmlElement": "<p>",
+        "ViewFiled": "text",
+        "ViewValue": "id",
+        "ParentElementID": "test", 
+        "checkbox": {
+            "value": "text",
+            "relevance": true
+        },
+        "icon": {
+            "class": "ic",
+            "src": "/Content/expand_hover.png",
+            "unfold": "/Content/close_hover.png",
+            "shrink":"/Content/expand_hover.png"
+
+        }
+
+    }
+
+
+
+    AuthorizationData(tree);
+
+    GetPowerByRoleID();
+
+
+ 
+    //$.ajax({
+    //    url:'http://localhost:61648//Power/GetMenu',
+    //    method: 'POST',
+    //    dataType: 'json',
+    //    success: function (data) {
+    //        console.log(JSON.parse(data.Result));
+    //        getParent(tree, JSON.parse(data.Result));
+           
+    //    }
+    //});
+
+
+    ////得到父节点
+    //function getParent(treeSet,data) {
+     
+    //    $.each(data, function (index, ele) {
+         
+    //        var speace =0;
+    //        if (ele[treeSet.ParentID] == 0) {
+    //            var treeArray = new Array();
+    
+    //            PushDate(ele, treeSet, speace, null, true);
+    //            getChilden(ele, data, treeSet, speace, ele[treeSet.NodeID]);
+    //        }
+    //    });
+    //}
+
+    ////得到子节点
+    //function getChilden(parent,data,treeSet,speace,parentIDs) {
+    //    speace +=10;
+    //    $.each(data, function (index, ele) {
+    //        if (ele[treeSet.ParentID] == parent[treeSet.NodeID]) {                    
+          
+    //            PushDate(ele, treeSet, speace, parentIDs, false);
+    //            getChilden(ele, data, treeSet, speace, ele[treeSet.NodeID]);
+    //        }
+    //    });
+    //}
+
+    ////把展示数据
+    //function PushDate(data, treeSet,speace,parentIDs,isP) {
+    //    var ele = $(treeSet.HtmlElement);
+
+    //    ele.css("padding-left", speace+"px"); 
+    //    appendCheckBox(data, ele, treeSet,parentIDs);
+
+    //    ele.val($(data)[treeSet.ViewValue]);
+        
+    //    var text = $("<text>");
+    //    text.text(data[treeSet.ViewFiled]);
+    //    ele.append(text);
+
+    //    var childen = $("<span>");
+    //    childen.text(data[treeSet.NodeID]);
+    //    childen.hide();
+    //    ele.append(childen);
+     
+    //    if (!isP) {           
+    //        ele.addClass(parentIDs+"");
+    //        ele.hide();
+    //    } 
+    //    ele.click(eleClick);
+        
+    //    $("#" + treeSet.ParentElementID).append(ele);
+    //}
+
+    ////添加checkbox
+    //function appendCheckBox(data, ele, treeSet, parentIDs) {
+    //    if (treeSet.checkbox == null) {
+    //        return;
+    //    }
+    //    var checkbox = $("<input type='checkbox'>");
+    //    checkbox.val(data[treeSet.checkbox.value]);
+    //    checkbox.addClass("ck" + parentIDs);
+    //    checkbox.click(checkBoxClick);   
+    //    ele.append(checkbox);
+    //}
+
+    ////元素的点击事件
+    //function eleClick() {     
+    //    var spanValue = $(this).find("span").text();
+    //    var $span = $("." + spanValue);
+    //    if ($span.css("display") == "none") {
+    //        $span.show();
+    //    } else {
+           
+    //        $span.hide();
+    //        hidleEle($span);
+    //    }
+    //}
+
+    
+    ////隐藏子节点元素
+    //function hidleEle(data) {
+
+    //    $.each(data, function (index, ele) {
+    //        var spanValue = $(ele).find("span").text();
+    //        var $span = $("." + spanValue);
+    //        $span.hide();
+    //        if ($span.length != 0) {
+    //            hidleEle($span);
+    //        }
+    //    });
+
+    //}
+
+
+    //function checkBoxClick(e) {
+    //    e.stopPropagation();
+    //    var span = $(this).nextAll("span").text();
+    //    var ck = $(this);
+    //    $(".ck" + span).click();
+    //    if (!ck.prop("checked")) {
+    //        $(".ck" + span).prop("checked", false);
+    //    } else {
+    //        $(".ck" + span).prop("checked", true);
+    //    }
+       
+    //}
+
+  
+</script>
